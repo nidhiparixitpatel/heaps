@@ -20,8 +20,8 @@ class MinHeap
     new_node = HeapNode.new(key, value)
     new_node_index = @store.length
     @store.push(new_node)
-    if new_node_index > 2
-     parent_node = find_parent()
+    if @store.length > 1
+      heap_up(@store.length - 1)
     end
     return new_node
   end
@@ -63,15 +63,16 @@ class MinHeap
     return parent_index
   end
 
-
-
-
   # This helper method takes an index and
   #  moves it up the heap, if it is less than it's parent node.
   #  It could be **very** helpful for the add method.
   # Time complexity: ?
   # Space complexity: ?
   def heap_up(index)
+    p = find_parent(index)
+    if @store[p].key < @store[index].key
+      swap(p, index)
+    end
     
   end
 
