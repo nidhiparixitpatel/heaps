@@ -1,6 +1,6 @@
 class HeapNode
   attr_reader :key, :value
-
+  # compare by key, priority field
   def initialize(key, value)
     @key = key
     @value = value
@@ -17,7 +17,13 @@ class MinHeap
   # Time Complexity: ?
   # Space Complexity: ?
   def add(key, value = key)
-    raise NotImplementedError, "Method not implemented yet..."
+    new_node = HeapNode.new(key, value)
+    new_node_index = @store.length
+    @store.push(new_node)
+    if new_node_index > 2
+     parent_node = find_parent()
+    end
+    return new_node
   end
 
   # This method removes and returns an element from the heap
@@ -51,6 +57,14 @@ class MinHeap
   end
 
   private
+
+  def find_parent(index)
+    parent_index = (index - 1)/2
+    return parent_index
+  end
+
+
+
 
   # This helper method takes an index and
   #  moves it up the heap, if it is less than it's parent node.
