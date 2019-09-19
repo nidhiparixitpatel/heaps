@@ -69,11 +69,16 @@ class MinHeap
   # Time complexity: ?
   # Space complexity: ?
   def heap_up(index)
-    p = find_parent(index)
-    if @store[p].key < @store[index].key
-      swap(p, index)
+    parent_index = find_parent(index)
+    if @store[parent_index].key < @store[index].key
+      swap(parent_index, index)
+      index = parent_index
     end
-    
+    if index == 0 || @store[parent_index].key <= @store[index].key
+      return
+    else
+      heap_up(index)
+    end
   end
 
   # This helper method takes an index and 
