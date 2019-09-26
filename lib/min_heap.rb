@@ -20,9 +20,8 @@ class MinHeap
     new_node = HeapNode.new(key, value)
     new_node_index = @store.length
     @store.push(new_node)
-    if @store.length > 1
-      heap_up(@store.length - 1)
-    end
+    heap_up(@store.length - 1)
+    
     return new_node
   end
 
@@ -31,8 +30,12 @@ class MinHeap
   # Time Complexity: ?
   # Space Complexity: ?
   def remove()
-    raise NotImplementedError, "Method not implemented yet..."
-  end
+    removed = @store[0].value
+    swap(0, @store.length - 1)
+    @store.pop(@store.length - 1)
+    heap_down(0)
+    return removed
+  end 
 
 
   # Used for Testing
@@ -69,14 +72,15 @@ class MinHeap
   # Time complexity: ?
   # Space complexity: ?
   def heap_up(index)
+    puts to_s
     parent_index = find_parent(index)
-    if @store[parent_index].key < @store[index].key
+    if @store[parent_index].key <= @store[index].key || index == 0
+      return
+    end 
+    if @store[parent_index].key > @store[index].key
+      # puts  @store[index].value
       swap(parent_index, index)
       index = parent_index
-    end
-    if index == 0 || @store[parent_index].key <= @store[index].key
-      return
-    else
       heap_up(index)
     end
   end
@@ -85,7 +89,16 @@ class MinHeap
   #  moves it up the heap if it's smaller
   #  than it's parent node.
   def heap_down(index)
-    raise NotImplementedError, "Method not implemented yet..."
+    parent_index = find_parent(index)
+    if @store[parent_index].key < @store[index].key
+      swap(parent_index, index)
+    end
+    if index == 0 || @store[parent_index].key >= @store[index].key
+      return
+    else
+      index = parent_index
+      heap_down(index)
+    end
   end
 
   # If you want a swap method... you're welcome
