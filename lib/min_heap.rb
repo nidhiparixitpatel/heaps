@@ -32,7 +32,7 @@ class MinHeap
   def remove()
     removed = @store[0].value
     swap(0, @store.length - 1)
-    @store.pop(@store.length - 1)
+    @store.pop
     heap_down(0)
     return removed
   end 
@@ -89,14 +89,18 @@ class MinHeap
   #  moves it up the heap if it's smaller
   #  than it's parent node.
   def heap_down(index)
-    parent_index = find_parent(index)
-    if @store[parent_index].key < @store[index].key
-      swap(parent_index, index)
-    end
-    if index == 0 || @store[parent_index].key >= @store[index].key
+    puts 'heap down'
+    puts to_s
+    child_index = 2*index + 1
+    if index >= @store.length - 1 || child_index >= @store.length - 1
       return
-    else
-      index = parent_index
+    end
+    if @store[child_index].key >= @store[index].key
+      return
+    end 
+    if @store[child_index].key < @store[index].key
+      swap(child_index, index)
+      index = child_index
       heap_down(index)
     end
   end
